@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminUser extends Model
 {
-    protected $fillable = ['asp_id', 'id', 'fullname','email', 'password', 'roleid','username', 'status', 'permission'];
+    use HasFactory;
 
+    protected $fillable = ['fullname', 'email', 'password'];
 }
