@@ -10,4 +10,8 @@ class AdminUser extends Model
     use HasFactory;
 
     protected $fillable = ['fullname', 'email', 'password'];
+    protected $hidden = [
+        'password',
+    ];
+
 }
