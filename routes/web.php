@@ -16,6 +16,8 @@ use Inertia\Inertia;
 |
 */
 
+
+
 //this is to change the landing page
 Route::get('/', function () {
     return Inertia::render('Login', [

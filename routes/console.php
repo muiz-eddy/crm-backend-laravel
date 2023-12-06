@@ -1,4 +1,7 @@
-<?php
+<?Route::get('login', function () {
+    return Inertia::render('Login', [
+    ]);
+}php
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
