@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* For login screen */
+.login-welcome {
+    font-size: 30px
+}
