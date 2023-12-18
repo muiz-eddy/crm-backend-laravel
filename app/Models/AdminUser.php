@@ -14,5 +14,4 @@ class AdminUser extends Authenticable
     protected $hidden = [
         'password',
     ];
-
 }
