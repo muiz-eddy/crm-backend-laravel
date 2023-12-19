@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use GuzzleHttp\Client;
+use App\Services\SteamApiService;
 
 class SteamApiController extends Controller
 {
-    //this will make use of guzzlehttp
+    public function store(SteamApiService $steamApiService)
+    {
+        $steamApiService->fetchAndStore();
 
+        return redirect()->back()->with('success', 'Steam data fetched');
+
+        //TODO: Implement Routing
+    }
 }
