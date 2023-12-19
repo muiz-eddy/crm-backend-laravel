@@ -2,15 +2,12 @@
 
 namespace App\Services;
 
-use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use App\Enums\SteamApiUrl;
-use App\Models\Steam_Games;
 
-class SteamApiService extends Command
+class SteamApiService
 {
     protected $client;
-    protected $signature = 'test:steamapi';
 
     public function __construct(Client $client)
     {
@@ -20,20 +17,40 @@ class SteamApiService extends Command
     public function fetchData()
     {
         try {
-            //TODO: Implement url using enum
-            $response = $this->client->request('GET', SteamApiUrl::API_STEAM_BASE_URL . SteamApiUrl::GET_STEAM_ID);
-
-            //Json Decode
-            $data = json_decode($response->getBody(), true);
-            dd($data);
+            $response = $this->client->request('GET', SteamApiUrl::API_STEAM_BASE_URL->value);
+            return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
+            var_dump($e);
         }
     }
 
-    protected function saveData($data)
+    public function fetchAppDetails($appId)
     {
-        Steam_Games::create(
-            []
-        );
+        $response = $this->client->request('GET', SteamApiUrl::STORE_STEAM_BASE_URL->value . $appId);
+        return json_decode($response->getBody(), true);
+    }
+
+    public function fetchAndStore()
+    {
+
+        $appList = $this->fetchData();
+
+        if (isset($appList['applist']['apps']) && is_array($appList['applist']['apps'])) {
+            $requestCount = 0;
+
+            foreach ($appList['applist']['apps'] as $app) {
+                if ($requestCount >= 200) {
+                    break;
+                }
+                $details = $this->fetchAppDetails($app['appid']);
+
+                //TODO: Save to database, make model fillable with right column
+                //
+                //
+
+                $requestCount++;
+                sleep(1.5);
+            }
+        }
     }
 }
